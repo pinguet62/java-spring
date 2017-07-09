@@ -1,0 +1,4 @@
+# https://travis-ci.org/pinguet62/test
+
+language: java
+jdk: oraclejdk8
