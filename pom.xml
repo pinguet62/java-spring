@@ -23,6 +23,8 @@
 
 	<modules>
 		<module>test-jsr303-validation</module>
+		<module>test-spring-boot-admin</module>
+		<module>test-utils</module>
 	</modules>
 
 	<dependencies>
