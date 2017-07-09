@@ -21,6 +21,10 @@
 		<project.build.target>${java.version}</project.build.target>
 	</properties>
 
+	<modules>
+		<module>test-jsr303-validation</module>
+	</modules>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
