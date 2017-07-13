@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Parent folder -->
+    <xs:include schemaLocation="../../lib/dependency.xsd" />
+
+    <xs:complexType name="DeepType">
+        <xs:sequence>
+            <xs:element name="field" />
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

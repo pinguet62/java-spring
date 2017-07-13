@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://XmlUtils/root">
+
+    <!-- Include & Import -->
+    <xs:include schemaLocation="included.xsd" />
+    <xs:import schemaLocation="imported.xsd" namespace="http://XmlUtils/imported" />
+
+    <!-- Path starting with "./" -->
+    <xs:include schemaLocation="./other.xsd" />
+
+    <!-- Sub folder -->
+    <xs:include schemaLocation="sub1/sub2/deep.xsd" />
+
+    <xs:element name="rootElement">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="field" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
