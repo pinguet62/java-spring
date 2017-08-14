@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>test-asciidoctor</artifactId>
+    <artifactId>test-asciidoc</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
