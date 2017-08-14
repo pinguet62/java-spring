@@ -13,7 +13,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<spring-boot-admin-starter.version>1.5.2</spring-boot-admin-starter.version>
+		<spring-boot-admin-starter.version>1.5.3</spring-boot-admin-starter.version>
 	</properties>
 
 	<modules>
