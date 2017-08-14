@@ -8,7 +8,7 @@ public class OrSpecification<T> extends AbstractCompositeSpecification<T> {
 
     @Override
     public boolean isSatisfiedBy(T candidate) {
-        boolean result = true;
+        boolean result = false;
         for (Specification<T> specification : specifications)
             result |= specification.isSatisfiedBy(candidate);
         return result;
