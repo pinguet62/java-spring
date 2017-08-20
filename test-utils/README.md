@@ -2,6 +2,11 @@
 
 ## Utils
 
+### Java SAX (Simple API for XML) utilities
+
+* Converter: from `String` to `Source`
+* XSD validation: `LSResourceResolver` based on local *relative path*
+
 ### Hexavigesimal
 
 Wrapper for Hexavigesimal representation and conversions.
