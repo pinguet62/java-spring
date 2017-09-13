@@ -44,6 +44,9 @@ public class Jsr303ValidationAspect {
             + " && !within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)")
     public void validateParameters(JoinPoint joinPoint) {
         Object object = joinPoint.getTarget();
+        if (object == null)
+            // static methods not supported
+            return;
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Object[] parameterValues = joinPoint.getArgs();
         Set<ConstraintViolation<Object>> theViolations = Validation.buildDefaultValidatorFactory().getValidator()
@@ -57,6 +60,9 @@ public class Jsr303ValidationAspect {
             + " && !within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)", returning = "returnValue")
     public void validateReturn(JoinPoint joinPoint, Object returnValue) {
         Object object = joinPoint.getTarget();
+        if (object == null)
+            // static methods not supported
+            return;
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Set<ConstraintViolation<Object>> theViolations = Validation.buildDefaultValidatorFactory().getValidator()
                 .forExecutables().validateReturnValue(object, method, returnValue);
