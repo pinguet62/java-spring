@@ -65,7 +65,7 @@ public class Jsr303ValidationAspect {
     }
 
     /** Process only component of application. */
-    @Pointcut("within(fr.pinguet62.test.jsr303.*)")
+    @Pointcut("within(fr.pinguet62.test.jsr303..*)")
     public void intoApplication() {
     }
 
@@ -89,7 +89,7 @@ public class Jsr303ValidationAspect {
      * <li>Hibernate implementation, from {@code org.hibernate.validator} package</li>
      * </ul>
      */
-    @Pointcut("execution(@(javax.validation.constraints..*) * *.*(..))")
+    @Pointcut("execution(@(javax.validation.constraints..*) * *.*(..)) || execution(@(org.hibernate.validator..*) * *.*(..))")
     public void isMethodAnnotated() {
     }
 

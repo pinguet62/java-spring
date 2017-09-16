@@ -14,6 +14,7 @@ import org.external.ExternalModel;
 import org.hibernate.validator.constraints.Length;
 import org.junit.Test;
 
+/** @see Jsr303ValidationAspect */
 public class Jsr303ValidationAspectTest {
 
     public static class Service {
