@@ -12,6 +12,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.ConstructorSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -19,18 +20,15 @@ import org.aspectj.lang.reflect.MethodSignature;
  * {@link Aspect} to validate all {@code javax.validation.*} (and custom extensions) annotations.
  * <p>
  * Throw an {@link ConstraintViolationException} containing all {@link ConstraintViolation}.
- * <p>
- * {@code "!within()"} to don't proces {@link Aspect} it-self.
  *
  * @see <a href="https://www.jcp.org/en/jsr/detail?id=303">JSR-303</a>
  */
 @Aspect
 public class Jsr303ValidationAspect {
 
-    @Before("execution(fr.pinguet62.test.jsr303..*.new(..))"
-            // fix
-            + " && !within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)")
+    @Before("execution(*.new(..)) && intoApplication() && hasAnnotatedArgument() && excludingThisAspect()")
     public void validateConstructorParameters(JoinPoint joinPoint) {
+        System.err.println(joinPoint);
         Constructor<?> constructor = ConstructorSignature.class.cast(joinPoint.getSignature()).getConstructor();
         Object[] parameterValues = joinPoint.getArgs();
         Set<ConstraintViolation<Object>> theViolations = Validation.buildDefaultValidatorFactory().getValidator()
@@ -39,9 +37,7 @@ public class Jsr303ValidationAspect {
             throw new ConstraintViolationException(theViolations);
     }
 
-    @Before("execution(* fr.pinguet62.test.jsr303..*.*(..))"
-            // fix
-            + " && !within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)")
+    @Before("execution(* *(..)) && intoApplication() && hasAnnotatedArgument() && excludingThisAspect()")
     public void validateParameters(JoinPoint joinPoint) {
         Object object = joinPoint.getTarget();
         if (object == null)
@@ -55,9 +51,7 @@ public class Jsr303ValidationAspect {
             throw new ConstraintViolationException(theViolations);
     }
 
-    @AfterReturning(value = "execution(* fr.pinguet62.test.jsr303..*.*(..))"
-            // fix
-            + " && !within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)", returning = "returnValue")
+    @AfterReturning(value = "intoApplication() && isMethodAnnotated() && excludingThisAspect()", returning = "returnValue")
     public void validateReturn(JoinPoint joinPoint, Object returnValue) {
         Object object = joinPoint.getTarget();
         if (object == null)
@@ -68,6 +62,40 @@ public class Jsr303ValidationAspect {
                 .forExecutables().validateReturnValue(object, method, returnValue);
         if (theViolations.size() > 0)
             throw new ConstraintViolationException(theViolations);
+    }
+
+    /** Process only component of application. */
+    @Pointcut("within(fr.pinguet62.test.jsr303.*)")
+    public void intoApplication() {
+    }
+
+    /**
+     * Support only:
+     * <ul>
+     * <li>Java EE API, from {@code javax.validation.constraints} package</li>
+     * <li>Hibernate implementation, from {@code org.hibernate.validator} package</li>
+     * </ul>
+     */
+    @Pointcut(/* constructor */ "execution(*.new(.., @(javax.validation.constraints..*) (*), ..)) || execution(*.new(.., @(org.hibernate.validator..*) (*), ..))"
+            + " || "
+            + /* method */ "execution(* *(.., @(javax.validation.constraints..*) (*), ..)) || execution(* *(.., @(org.hibernate.validator..*) (*), ..))")
+    public void hasAnnotatedArgument() {
+    }
+
+    /**
+     * Support only:
+     * <ul>
+     * <li>Java EE API, from {@code javax.validation.constraints} package</li>
+     * <li>Hibernate implementation, from {@code org.hibernate.validator} package</li>
+     * </ul>
+     */
+    @Pointcut("execution(@(javax.validation.constraints..*) * *.*(..))")
+    public void isMethodAnnotated() {
+    }
+
+    /** Fix error: don't process itself. */
+    @Pointcut("!within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)")
+    public void excludingThisAspect() {
     }
 
 }
