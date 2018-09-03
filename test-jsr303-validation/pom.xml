@@ -22,24 +22,24 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.1.Final</version>
+			<version>6.0.12.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.el</artifactId>
-			<version>3.0.1-b08</version>
+			<version>3.0.1-b10</version>
 		</dependency>
 
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.8.10</version>
+			<version>1.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.8.10</version>
+			<version>1.9.1</version>
 		</dependency>
 	</dependencies>
 
@@ -48,7 +48,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.10</version>
+				<version>1.11</version>
 				<configuration>
 					<complianceLevel>${project.build.target}</complianceLevel>
 				</configuration>
@@ -64,7 +64,7 @@
 					<dependency>
 						<groupId>org.aspectj</groupId>
 						<artifactId>aspectjtools</artifactId>
-						<version>1.8.10</version>
+						<version>1.9.1</version>
 					</dependency>
 				</dependencies>
 			</plugin>
