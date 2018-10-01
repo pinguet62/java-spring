@@ -26,6 +26,7 @@
 		<module>test-jsr303-validation</module>
 		<module>test-pattern-specification</module>
 		<module>test-spring-boot-admin</module>
+		<module>test-spring-data-encrypt</module>
 		<module>test-spring-data-throwifnotfound</module>
 		<module>test-spring-messagesource-database</module>
 		<module>test-spring-reactive-globalcontext</module>
