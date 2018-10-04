@@ -12,9 +12,6 @@
     <artifactId>test-asciidoc</artifactId>
     <packaging>jar</packaging>
 
-    <dependencies>
-    </dependencies>
-
     <build>
         <plugins>
             <!-- AsciiDoc -->

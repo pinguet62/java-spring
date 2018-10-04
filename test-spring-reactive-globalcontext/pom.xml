@@ -14,12 +14,6 @@
 
     <description>Use global context in Reactor project</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,6 +39,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
