@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.6.RELEASE</version>
+		<version>1.5.7.RELEASE</version>
 	</parent>
 
 	<groupId>fr.pinguet62.test</groupId>
@@ -26,6 +26,7 @@
 		<module>test-jsr303-validation</module>
 		<module>test-pattern-specification</module>
 		<module>test-spring-boot-admin</module>
+		<module>test-spring-boot-routingdatasource-autoconfiguration</module>
 		<module>test-spring-messagesource-database</module>
 		<module>test-spring-statemachine</module>
 		<module>test-utils</module>
