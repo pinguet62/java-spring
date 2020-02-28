@@ -22,6 +22,7 @@
 
 	<modules>
 		<module>test-asciidoc</module>
+		<module>test-jackson-undefined</module>
 		<module>test-jsr303-validation</module>
 		<module>test-pattern-specification</module>
 		<module>test-spring-boot-admin</module>
