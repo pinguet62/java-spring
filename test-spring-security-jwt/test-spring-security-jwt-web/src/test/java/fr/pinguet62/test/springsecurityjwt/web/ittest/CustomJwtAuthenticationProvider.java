@@ -29,5 +29,4 @@ public class CustomJwtAuthenticationProvider extends JwtAuthenticationProvider {
         Collection<? extends GrantedAuthority> authorities = stream(roles).map(r -> "ROLE_" + r).map(SimpleGrantedAuthority::new).collect(toList());
         return new CustomJwtAuthenticationToken(jwtAuthenticationToken.getSubject(), jwtAuthenticationToken.getJwtToken(), jwtAuthenticationToken.getDecodedJWT(), authorities);
     }
-
 }

@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.4.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.7</version>
+    </parent>
 
-	<groupId>fr.pinguet62.test</groupId>
-	<artifactId>test-parent</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>fr.pinguet62.test</groupId>
+    <artifactId>test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<properties>
-		<java.version>14</java.version>
-		<project.build.source>${java.version}</project.build.source>
-		<project.build.target>${java.version}</project.build.target>
-	</properties>
+    <properties>
+        <java.version>17</java.version>
+    </properties>
 
-	<modules>
-		<module>test-asciidoc</module>
-		<module>test-jackson-undefined</module>
-		<module>test-jsr303-validation</module>
-		<module>test-pattern-specification</module>
-		<module>test-spring-boot-admin</module>
+    <modules>
+        <module>spring-boot-autoconfigurations</module>
+        <module>test-asciidoc</module>
+        <module>test-jackson-undefined</module>
+        <module>test-jsr303-validation</module>
+        <module>test-pattern-specification</module>
+        <module>test-spring-boot-admin</module>
         <module>test-spring-boot-routingdatasource-autoconfiguration</module>
-		<module>test-spring-data-encrypt</module>
-		<module>test-spring-data-throwifnotfound</module>
-		<module>test-spring-messagesource-database</module>
-		<module>test-spring-reactive-globalcontext</module>
-		<module>test-spring-security-jwt</module>
-		<module>test-spring-statemachine</module>
-		<module>test-utils</module>
-	</modules>
+        <module>test-spring-data-encrypt</module>
+        <module>test-spring-data-throwifnotfound</module>
+        <module>test-spring-messagesource-database</module>
+        <module>test-spring-reactive-globalcontext</module>
+        <module>test-spring-security-jwt</module>
+        <module>test-spring-statemachine</module>
+        <module>test-utils</module>
+    </modules>
 </project>

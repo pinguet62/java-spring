@@ -5,10 +5,10 @@
 ### Description
 
 * **Usual** configuration:  
-	`/src/asciidoc/` folder
+  `/src/asciidoc/` folder
 * **Maven site** integration:  
-	`/site/` folder  
-	\+ copy from *usual output* to *Maven site output*
+  `/site/` folder  
+  \+ copy from *usual output* to *Maven site output*
 
 ### Result
 

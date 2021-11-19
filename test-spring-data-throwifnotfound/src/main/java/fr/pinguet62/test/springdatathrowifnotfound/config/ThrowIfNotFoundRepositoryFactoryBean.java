@@ -18,5 +18,4 @@ public class ThrowIfNotFoundRepositoryFactoryBean<T extends Repository<S, ID>, S
         factory.addRepositoryProxyPostProcessor(new ThrowIfNotFoundRepositoryProxyPostProcessor());
         return factory;
     }
-
 }

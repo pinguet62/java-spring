@@ -1,20 +1,19 @@
 package fr.pinguet62.test.utils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-
-public final class HexavigesimalTest {
+class HexavigesimalTest {
 
     /**
      * Test for {@link fr.pinguet62.utils.hexavigesimal.Hexavigesimal#parse(String)}. <br />
      * Validate the correct conversion.
      */
     @Test
-    public void test_parse() {
+    void test_parse() {
         assertEquals(0, Hexavigesimal.parse("A"));
         assertEquals(1, Hexavigesimal.parse("B"));
         assertEquals(24, Hexavigesimal.parse("Y"));
@@ -35,13 +34,9 @@ public final class HexavigesimalTest {
      * Validate the correct argument control of argument.
      */
     @Test
-    public void test_parse_invalid() {
-        for (String representation : Arrays.asList(null, "", "123", "abc", "A-Z"))
-            try {
-                Hexavigesimal.parse(representation);
-                fail();
-            } catch (IllegalArgumentException e) {
-            }
+    void test_parse_invalid() {
+        for (String representation : asList(null, "", "123", "abc", "A-Z"))
+            assertThrows(IllegalArgumentException.class, () -> Hexavigesimal.parse(representation));
     }
 
     /**
@@ -49,7 +44,7 @@ public final class HexavigesimalTest {
      * Validate the correct format of {@link String} representation.
      */
     @Test
-    public void test_toString() {
+    void test_toString() {
         assertEquals("A", new Hexavigesimal(0).toString());
         assertEquals("B", new Hexavigesimal(1).toString());
         assertEquals("Y", new Hexavigesimal(24).toString());
@@ -64,5 +59,4 @@ public final class HexavigesimalTest {
         assertEquals("AAA", new Hexavigesimal(702).toString());
         assertEquals("AAB", new Hexavigesimal(703).toString());
     }
-
 }

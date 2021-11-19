@@ -15,5 +15,4 @@ public class ThrowIfNotFoundRepositoryFactory extends JpaRepositoryFactory {
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
         return ThrowIfNotFoundRepository.class;
     }
-
 }

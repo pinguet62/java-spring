@@ -7,5 +7,4 @@ public abstract class AbstractCompositeSpecification<T> implements Specification
     public AbstractCompositeSpecification(Specification<T>... specifications) {
         this.specifications = specifications;
     }
-
 }

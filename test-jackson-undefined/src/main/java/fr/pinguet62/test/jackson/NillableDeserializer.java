@@ -41,5 +41,4 @@ class NillableDeserializer extends ReferenceTypeDeserializer<Nillable<?>> {
     public Object getReferenced(Nillable<?> reference) {
         return reference.get();
     }
-
 }

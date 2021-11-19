@@ -1,1 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration = fr.pinguet62.test.springboot.routingdatasource.RoutingDataSourceAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  fr.pinguet62.test.springboot.routingdatasource.RoutingDataSourceAutoConfiguration

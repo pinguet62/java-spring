@@ -1,13 +1,5 @@
 package fr.pinguet62.test.jsr303;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validation;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,6 +7,13 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.ConstructorSignature;
 import org.aspectj.lang.reflect.MethodSignature;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.Set;
 
 /**
  * {@link Aspect} to validate all {@code javax.validation.*} (and custom extensions) annotations.
@@ -28,7 +27,6 @@ public class Jsr303ValidationAspect {
 
     @Before("execution(*.new(..)) && intoApplication() && hasAnnotatedArgument() && excludingThisAspect()")
     public void validateConstructorParameters(JoinPoint joinPoint) {
-        System.err.println(joinPoint);
         Constructor<?> constructor = ConstructorSignature.class.cast(joinPoint.getSignature()).getConstructor();
         Object[] parameterValues = joinPoint.getArgs();
         Set<ConstraintViolation<Object>> theViolations = Validation.buildDefaultValidatorFactory().getValidator()
@@ -64,7 +62,9 @@ public class Jsr303ValidationAspect {
             throw new ConstraintViolationException(theViolations);
     }
 
-    /** Process only component of application. */
+    /**
+     * Process only component of application.
+     */
     @Pointcut("within(fr.pinguet62.test.jsr303..*)")
     public void intoApplication() {
     }
@@ -93,9 +93,10 @@ public class Jsr303ValidationAspect {
     public void isMethodAnnotated() {
     }
 
-    /** Fix error: don't process itself. */
+    /**
+     * Fix error: don't process itself.
+     */
     @Pointcut("!within(fr.pinguet62.test.jsr303.Jsr303ValidationAspect)")
     public void excludingThisAspect() {
     }
-
 }

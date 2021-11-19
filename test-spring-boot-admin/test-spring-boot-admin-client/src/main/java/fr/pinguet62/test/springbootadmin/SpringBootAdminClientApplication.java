@@ -17,5 +17,4 @@ public class SpringBootAdminClientApplication {
     public String home() {
         return "Hello world";
     }
-
 }

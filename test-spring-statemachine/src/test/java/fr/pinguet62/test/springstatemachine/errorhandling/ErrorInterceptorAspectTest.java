@@ -1,49 +1,46 @@
 package fr.pinguet62.test.springstatemachine.errorhandling;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.statemachine.StateContext;
-import org.springframework.stereotype.Component;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import fr.pinguet62.test.springstatemachine.errorhandling.ErrorInterceptorAspect.InterceptInternalStateMachineErrors;
 import fr.pinguet62.test.springstatemachine.errorhandling.ErrorInterceptorAspectTest.TestActions;
 import fr.pinguet62.test.springstatemachine.errorhandling.ErrorInterceptorAspectTest.TestIndirectServices;
 import fr.pinguet62.test.springstatemachine.errorhandling.ErrorInterceptorAspectTest.TestServices;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.statemachine.StateContext;
+import org.springframework.stereotype.Component;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { ErrorInterceptorAspect.class, TestServices.class, TestIndirectServices.class, TestActions.class })
-public class ErrorInterceptorAspectTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
+
+
+@SpringBootTest(classes = {ErrorInterceptorAspect.class, TestServices.class, TestIndirectServices.class, TestActions.class})
+class ErrorInterceptorAspectTest {
 
     // Separated class for proxy
     @Component
-    public static class TestActions {
-        public void successfullAction(StateContext<String, String> stateContext) {
+    static class TestActions {
+        void successfullAction(StateContext<String, String> stateContext) {
         }
 
-        public void anyFallingAction(StateContext<String, String> stateContext) {
+        void anyFallingAction(StateContext<String, String> stateContext) {
             throw new RuntimeException("anyFallingAction");
         }
 
-        public void firstFallingAction(StateContext<String, String> stateContext) {
+        void firstFallingAction(StateContext<String, String> stateContext) {
             throw new RuntimeException("firstFallingAction");
         }
 
-        public void secondFallingAction(StateContext<String, String> stateContext) {
+        void secondFallingAction(StateContext<String, String> stateContext) {
             throw new RuntimeException("secondFallingAction");
         }
     }
 
     @Component
-    public static class TestServices {
+    static class TestServices {
         @Autowired
-        private TestActions actions;
+        TestActions actions;
 
         @InterceptInternalStateMachineErrors
         public void executeFallingActions() {
@@ -69,12 +66,12 @@ public class ErrorInterceptorAspectTest {
     }
 
     @Component
-    public static class TestIndirectServices {
+    static class TestIndirectServices {
         @Autowired
-        private TestServices subService;
+        TestServices subService;
 
         @Autowired
-        private TestActions actions;
+        TestActions actions;
 
         @InterceptInternalStateMachineErrors
         public void executeIndirect() {
@@ -100,13 +97,13 @@ public class ErrorInterceptorAspectTest {
     }
 
     @Autowired
-    private TestServices service;
+    TestServices service;
 
     @Autowired
-    private TestIndirectServices indirectService;
+    TestIndirectServices indirectService;
 
     @Test
-    public void test_onlyFirstIsRethrown() {
+    void test_onlyFirstIsRethrown() {
         try {
             service.executeFallingActions();
             fail("Aspect should throw an Exception");
@@ -117,7 +114,7 @@ public class ErrorInterceptorAspectTest {
     }
 
     @Test
-    public void test_subInterceptions() {
+    void test_subInterceptions() {
         try {
             indirectService.executeIndirect();
             fail("Aspect should throw an Exception");
@@ -126,5 +123,4 @@ public class ErrorInterceptorAspectTest {
             assertFalse(e.getNextThrowable().isEmpty()); // because 2 errors
         }
     }
-
 }

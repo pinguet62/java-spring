@@ -17,5 +17,4 @@ public class CryptoConverter implements AttributeConverter<String, String> {
     public String convertToEntityAttribute(String dbData) {
         return new StringBuilder(dbData).reverse().toString();
     }
-
 }

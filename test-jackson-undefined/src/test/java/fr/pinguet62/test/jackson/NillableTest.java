@@ -1,18 +1,18 @@
 package fr.pinguet62.test.jackson;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class NillableTest {
+class NillableTest {
 
     @Test
-    public void test_equals() {
+    void test_equals() {
         assertEquals(Nillable.undefined(), Nillable.undefined());
         assertNotEquals(Nillable.undefined(), Nillable.ofDefined("any"));
         assertNotEquals(Nillable.ofDefined("first"), Nillable.ofDefined("second"));
@@ -20,7 +20,7 @@ public class NillableTest {
     }
 
     @Test
-    public void test_hashCode() {
+    void test_hashCode() {
         assertThat(Nillable.ofDefined("value").hashCode(), is(Objects.hash(true, "value")));
     }
 

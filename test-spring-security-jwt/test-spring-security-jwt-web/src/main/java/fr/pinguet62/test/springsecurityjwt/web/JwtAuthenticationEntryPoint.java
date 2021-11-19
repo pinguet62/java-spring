@@ -1,5 +1,7 @@
 package fr.pinguet62.test.springsecurityjwt.web;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -18,6 +20,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, In
     static final String ERROR_HEADER = WWW_AUTHENTICATE;
     static final HttpStatus ERROR_STATUS = UNAUTHORIZED;
 
+    @Getter
+    @Setter
     private String realmName;
 
     @Override
@@ -29,13 +33,4 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, In
         response.addHeader(ERROR_HEADER, "Bearer realm=\"" + realmName + "\"");
         response.sendError(ERROR_STATUS.value(), ERROR_STATUS.getReasonPhrase());
     }
-
-    public String getRealmName() {
-        return realmName;
-    }
-
-    public void setRealmName(String realmName) {
-        this.realmName = realmName;
-    }
-
 }

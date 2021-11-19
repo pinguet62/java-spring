@@ -19,5 +19,4 @@ public class EncryptedEntity {
 
     @Convert(converter = CryptoConverter.class)
     String name;
-
 }

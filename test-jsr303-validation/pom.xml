@@ -5,12 +5,15 @@
 
     <parent>
         <groupId>fr.pinguet62.test</groupId>
-        <artifactId>test-parent</artifactId>
+        <artifactId>test</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>test-jsr303-validation</artifactId>
-    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>16</java.version>
+    </properties>
 
     <dependencies>
         <!-- JSR 303 -->
@@ -34,8 +37,8 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -45,9 +48,11 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.11</version>
+                <version>1.14.0</version>
                 <configuration>
-                    <complianceLevel>${project.build.target}</complianceLevel>
+                    <complianceLevel>${java.version}</complianceLevel>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
                 <executions>
                     <execution>
@@ -61,7 +66,7 @@
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjtools</artifactId>
-                        <version>1.9.4</version>
+                        <version>1.9.7</version>
                     </dependency>
                 </dependencies>
             </plugin>

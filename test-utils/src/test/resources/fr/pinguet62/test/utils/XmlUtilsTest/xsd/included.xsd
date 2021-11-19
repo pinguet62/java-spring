@@ -3,7 +3,7 @@
 
     <xs:complexType name="Other1Type">
         <xs:sequence>
-            <xs:element name="field" />
+            <xs:element name="field"/>
         </xs:sequence>
     </xs:complexType>
 

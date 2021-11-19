@@ -39,5 +39,4 @@ public class JwtAuthenticationConverter implements Function<ServerWebExchange, M
         Authentication authentication = new JwtAuthenticationToken(decoded.getSubject(), jwtToken, decoded);
         return just(authentication);
     }
-
 }

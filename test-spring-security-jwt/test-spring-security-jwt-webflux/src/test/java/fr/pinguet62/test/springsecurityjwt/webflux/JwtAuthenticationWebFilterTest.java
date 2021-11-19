@@ -1,16 +1,16 @@
 package fr.pinguet62.test.springsecurityjwt.webflux;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 
-public class JwtAuthenticationWebFilterTest {
+class JwtAuthenticationWebFilterTest {
 
-    private ServerWebExchange exchange;
-    private WebFilterChain chain;
+    ServerWebExchange exchange;
+    WebFilterChain chain;
 
     @Test
-    public void noHeader_continue() throws Exception {
+    void noHeader_continue() throws Exception {
 //        JwtAuthenticationWebFilter webFiler = new JwtAuthenticationWebFilter();
 //
 //        WebTestClient client = WebTestClient.bindToWebHandler(exchange -> Mono.empty()).webFilter(webFiler).build();
@@ -18,5 +18,4 @@ public class JwtAuthenticationWebFilterTest {
 //        client.get().uri("/").exchange()
 //                .returnResult();
     }
-
 }

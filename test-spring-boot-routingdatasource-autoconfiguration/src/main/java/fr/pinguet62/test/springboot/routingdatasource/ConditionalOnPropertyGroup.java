@@ -18,12 +18,12 @@ import org.springframework.jndi.JndiPropertySource;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static java.util.Arrays.asList;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.autoconfigure.condition.ConditionMessage.forCondition;
 import static org.springframework.boot.autoconfigure.condition.ConditionOutcome.match;
@@ -75,7 +75,7 @@ public @interface ConditionalOnPropertyGroup {
             Map<String, Object> properties = new HashMap<>();
 
             // Filter supported types
-            if (asList(RandomValuePropertySource.class, StubPropertySource.class, JndiPropertySource.class).contains(propertySource.getClass()))
+            if (List.of(RandomValuePropertySource.class, StubPropertySource.class, JndiPropertySource.class).contains(propertySource.getClass()))
                 return properties; // not useful
             if (!(propertySource instanceof EnumerablePropertySource)) {
                 LOGGER.warn("Skip unsupported {} type: {}", PropertySource.class.getSimpleName(), propertySource.getClass().getName());
@@ -87,7 +87,5 @@ public @interface ConditionalOnPropertyGroup {
                 properties.put(propertyName, enumerablePropertySource.getProperty(propertyName));
             return properties;
         }
-
     }
-
 }

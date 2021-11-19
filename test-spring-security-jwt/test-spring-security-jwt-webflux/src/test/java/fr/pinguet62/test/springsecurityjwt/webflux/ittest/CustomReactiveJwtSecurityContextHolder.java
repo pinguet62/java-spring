@@ -22,5 +22,4 @@ public class CustomReactiveJwtSecurityContextHolder {
     public static Mono<String> getJwtToken() {
         return getAuthentication().map(JwtAuthenticationToken::getJwtToken);
     }
-
 }

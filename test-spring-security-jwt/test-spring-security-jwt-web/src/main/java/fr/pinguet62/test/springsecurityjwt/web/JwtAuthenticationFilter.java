@@ -91,5 +91,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new AuthenticationServiceException("Error processing JWT token", e);
         }
     }
-
 }

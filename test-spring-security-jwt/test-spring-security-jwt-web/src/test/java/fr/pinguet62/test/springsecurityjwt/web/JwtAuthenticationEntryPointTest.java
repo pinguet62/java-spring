@@ -1,6 +1,6 @@
 package fr.pinguet62.test.springsecurityjwt.web;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -12,14 +12,14 @@ import java.io.IOException;
 
 import static fr.pinguet62.test.springsecurityjwt.web.JwtAuthenticationEntryPoint.ERROR_HEADER;
 import static fr.pinguet62.test.springsecurityjwt.web.JwtAuthenticationEntryPoint.ERROR_STATUS;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
-import static org.junit.Assert.assertThat;
 
-public class JwtAuthenticationEntryPointTest {
+class JwtAuthenticationEntryPointTest {
 
     @Test
-    public void commence() throws IOException {
+    void commence() throws IOException {
         JwtAuthenticationEntryPoint authenticationEntryPoint = new JwtAuthenticationEntryPoint();
         HttpServletRequest request = new MockHttpServletRequest();
         HttpServletResponse response = new MockHttpServletResponse();
@@ -30,5 +30,4 @@ public class JwtAuthenticationEntryPointTest {
         assertThat(response.getHeader(ERROR_HEADER), startsWith("Bearer realm=\""));
         assertThat(response.getStatus(), is(ERROR_STATUS.value()));
     }
-
 }

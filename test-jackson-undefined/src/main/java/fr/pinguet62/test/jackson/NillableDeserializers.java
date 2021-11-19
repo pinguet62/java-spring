@@ -21,5 +21,4 @@ public class NillableDeserializers extends Deserializers.Base {
         }
         return null;
     }
-
 }

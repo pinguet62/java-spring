@@ -1,6 +1,8 @@
 package fr.pinguet62.test.springsecurityjwt.webflux;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -8,19 +10,17 @@ import java.util.Collection;
 
 import static java.util.Collections.emptyList;
 
+@RequiredArgsConstructor
 public class JwtAuthenticationToken implements Authentication {
 
+    @Getter
     private final String subject;
 
+    @Getter
     private final String jwtToken;
 
+    @Getter
     private final DecodedJWT decodedJWT;
-
-    public JwtAuthenticationToken(String subject, String jwtToken, DecodedJWT decodedJWT) {
-        this.subject = subject;
-        this.jwtToken = jwtToken;
-        this.decodedJWT = decodedJWT;
-    }
 
     @Override
     public Object getPrincipal() {
@@ -56,17 +56,4 @@ public class JwtAuthenticationToken implements Authentication {
     public String getName() {
         return subject;
     }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
-    public DecodedJWT getDecodedJWT() {
-        return decodedJWT;
-    }
-
 }

@@ -13,5 +13,4 @@ public class OrSpecification<T> extends AbstractCompositeSpecification<T> {
             result |= specification.isSatisfiedBy(candidate);
         return result;
     }
-
 }

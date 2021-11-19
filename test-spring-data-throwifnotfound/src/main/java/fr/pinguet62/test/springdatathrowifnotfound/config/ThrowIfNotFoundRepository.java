@@ -15,5 +15,4 @@ public class ThrowIfNotFoundRepository<T, ID> extends SimpleJpaRepository<T, ID>
     public T findByIdOrThrow(ID id) {
         return super.findById(id).orElseThrow(() -> new NotFoundException());
     }
-
 }

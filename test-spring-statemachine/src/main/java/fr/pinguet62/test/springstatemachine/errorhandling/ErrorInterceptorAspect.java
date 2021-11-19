@@ -1,15 +1,5 @@
 package fr.pinguet62.test.springstatemachine.errorhandling;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -21,12 +11,24 @@ import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.guard.Guard;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 @Component
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @Aspect
 public class ErrorInterceptorAspect {
 
-    /** {@link Deque} who take all {@link Exception} of current {@link Thread}. */
+    /**
+     * {@link Deque} who take all {@link Exception} of current {@link Thread}.
+     */
     private final static ThreadLocal<Deque<Throwable>> HOLDER = new ThreadLocal<>();
 
     /**
@@ -43,15 +45,17 @@ public class ErrorInterceptorAspect {
         exceptions.add(ex);
     }
 
-    /** Used by {@link Aspect} to re-throw any {@link Exception} occurred into {@link StateMachine}. */
-    @Target({ METHOD })
+    /**
+     * Used by {@link Aspect} to re-throw any {@link Exception} occurred into {@link StateMachine}.
+     */
+    @Target({METHOD})
     @Retention(RUNTIME)
     public static @interface InterceptInternalStateMachineErrors {
     }
 
     @Around("@annotation(annotation)")
     public Object throwExceptionIfErrorEncountered(ProceedingJoinPoint proceedingJoinPoint,
-            InterceptInternalStateMachineErrors annotation) throws Throwable {
+                                                   InterceptInternalStateMachineErrors annotation) throws Throwable {
         Deque<Throwable> exceptions = HOLDER.get();
 
         // init interceptor chain
@@ -73,5 +77,4 @@ public class ErrorInterceptorAspect {
             throw new InternalStateMachineException(exceptions.getLast(), nextExceptions);
         }
     }
-
 }

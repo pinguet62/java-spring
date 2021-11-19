@@ -1,35 +1,31 @@
 package fr.pinguet62.test.springstatemachine.errorhandling.normal;
 
-import static java.util.EnumSet.allOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.statemachine.config.StateMachineBuilder.builder;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import fr.pinguet62.test.springstatemachine.errorhandling.MyEvent;
+import fr.pinguet62.test.springstatemachine.errorhandling.MyState;
+import fr.pinguet62.test.springstatemachine.errorhandling.TestConfig;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.StateMachineBuilder.Builder;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import fr.pinguet62.test.springstatemachine.errorhandling.MyEvent;
-import fr.pinguet62.test.springstatemachine.errorhandling.MyState;
-import fr.pinguet62.test.springstatemachine.errorhandling.TestConfig;
+import static java.util.EnumSet.allOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.statemachine.config.StateMachineBuilder.builder;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestConfig.class)
-public class EntryFailTest {
+class EntryFailTest {
 
     @Autowired
-    private BeanFactory beanFactory;
+    BeanFactory beanFactory;
 
     @Autowired
-    private Action<MyState, MyEvent> fallingAction;
+    Action<MyState, MyEvent> fallingAction;
 
-    private StateMachine<MyState, MyEvent> build() throws Exception {
+    StateMachine<MyState, MyEvent> build() throws Exception {
         Builder<MyState, MyEvent> builder = builder();
         // @formatter:off
         builder.configureConfiguration()
@@ -51,7 +47,7 @@ public class EntryFailTest {
     }
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         StateMachine<MyState, MyEvent> stateMachine = build();
 
         boolean result = stateMachine.sendEvent(MyEvent.Sample);
@@ -59,5 +55,4 @@ public class EntryFailTest {
         assertTrue(result); // event processed
         assertEquals(MyState.B, stateMachine.getState().getId()); // keep target state
     }
-
 }

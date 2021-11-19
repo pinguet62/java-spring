@@ -77,5 +77,4 @@ public class RoutingDataSourceAutoConfiguration {
 
         return dataSource;
     }
-
 }

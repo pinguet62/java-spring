@@ -38,5 +38,4 @@ public class JwtAuthenticationEntryPoint implements ServerAuthenticationEntryPoi
         Assert.notNull(realm, "realm cannot be null");
         return format(WWW_AUTHENTICATE_FORMAT, realm);
     }
-
 }

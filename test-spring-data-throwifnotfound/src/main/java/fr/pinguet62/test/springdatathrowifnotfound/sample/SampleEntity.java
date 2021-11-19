@@ -17,5 +17,4 @@ public class SampleEntity {
     Integer id;
 
     String name;
-
 }

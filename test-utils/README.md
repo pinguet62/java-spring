@@ -19,19 +19,19 @@ Numbers are represented using only [Basic Latin alphabet](http://en.wikipedia.or
 
 Decimal | Hexavigesimal
 :-----: | :-----------:
-  0     | `A`
-  1     | `B`
-  2     | `C`
-  ...   | ...
-  24    | `Y`
-  25    | `Z`
-  26    | `AA`
-  27    | `AB`
-  ...   | ...
-  700   | `ZZ`
-  701   | `AAA`
-  702   | `AAB`
-  ...   | ...
+0     | `A`
+1     | `B`
+2     | `C`
+...   | ...
+24    | `Y`
+25    | `Z`
+26    | `AA`
+27    | `AB`
+...   | ...
+700   | `ZZ`
+701   | `AAA`
+702   | `AAB`
+...   | ...
 
 #### Warning !
 
@@ -52,7 +52,6 @@ Hexavigesimal |                              Conversion                         
 `A`           |                                                 **0**\*26<sup>0</sup> | 0
 `AA`          |                         **1**\*26<sup>1</sup> + **0**\*26<sup>0</sup> | 26
 `AAA`         | **1**\*26<sup>2</sup> + **1**\*26<sup>1</sup> + **0**\*26<sup>0</sup> | 702
-
 
 #### Excel
 

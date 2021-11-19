@@ -9,18 +9,15 @@ public class InternalStateMachineException extends RuntimeException {
     private final Collection<Throwable> nextThrowable;
 
     /**
-     * @param firstCause
-     *            The first {@link Throwable} occurred.
-     * @param nextThrowable
-     *            Next {@link Throwable} occurred after the {@code firstCause}.
+     * @param firstCause    The first {@link Throwable} occurred.
+     * @param nextThrowable Next {@link Throwable} occurred after the {@code firstCause}.
      */
     public InternalStateMachineException(Throwable firstCause, Collection<Throwable> nextThrowable) {
         super(firstCause);
         this.nextThrowable = nextThrowable;
     }
 
-    /* default for unit-test */ Collection<Throwable> getNextThrowable() {
+    Collection<Throwable> getNextThrowable() {
         return nextThrowable;
     }
-
 }

@@ -13,5 +13,4 @@ public class AndSpecification<T> extends AbstractCompositeSpecification<T> {
             result &= specification.isSatisfiedBy(candidate);
         return result;
     }
-
 }

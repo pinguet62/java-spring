@@ -9,27 +9,37 @@ See: https://projectreactor.io/docs/core/3.1.2.RELEASE/reference/#context
 ### `@Scope(SCOPE_REQUEST)`
 
 Implementation:
+
 ```java
+
 @Component
 @Scope(value = SCOPE_REQUEST, proxyMode = TARGET_CLASS)
 public static class CurrentUser {
     private String value;
-    public String getValue() { return value; }
-    public void setValue(String value) { this.value = value; }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
 ```
 
 Usage:
+
 ```java
 @GetMapping("/a")
-public Flux<Object> a() {
-    return flux
-            .doOnNext(it -> currentUser.setValue("A"))
-            // ...
-}
+public Flux<Object> a(){
+        return flux
+        .doOnNext(it->currentUser.setValue("A"))
+        // ...
+        }
 ```
 
 Error:
+
 ```
 java.lang.IllegalStateException: No thread-bound request found: Are you referring to request attributes outside of an actual web request, or processing a request outside of the originally receiving thread? If you are actually operating within a web request and still receive this message, your code is probably running outside of DispatcherServlet/DispatcherPortlet: In this case, use RequestContextListener or RequestContextFilter to expose the current request.
 	at org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes(RequestContextHolder.java:131) ~[spring-web-5.0.8.RELEASE.jar:5.0.8.RELEASE]

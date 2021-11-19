@@ -1,5 +1,13 @@
 package fr.pinguet62.test.messagesourcedatabase;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+
 import static java.util.Locale.CHINESE;
 import static java.util.Locale.ENGLISH;
 import static java.util.Locale.FRANCE;
@@ -8,38 +16,32 @@ import static java.util.Locale.GERMAN;
 import static java.util.Locale.GERMANY;
 import static java.util.Locale.ITALIAN;
 import static java.util.Locale.UK;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
+/**
+ * @see DatabaseMessageSource
+ */
+class DatabaseMessageSourceTest {
 
-/** @see DatabaseMessageSource */
-public class DatabaseMessageSourceTest {
+    static final Object[] args = {};
 
-    public static final Object[] args = {};
-
-    @RunWith(SpringRunner.class)
-    @ContextConfiguration(classes = DatabaseMessageSourceConfig.class)
-    @Sql("/test-data.sql")
+    @Nested
+    @SpringBootTest(classes = DatabaseMessageSourceConfig.class)
+    @Sql(value = "/test-data.sql", config = @SqlConfig(encoding = "UTF-8"))
     @Sql(statements = "delete from MESSAGE;", executionPhase = AFTER_TEST_METHOD)
-    public static class DatabaseWithLanguage {
+    class DatabaseWithLanguage {
 
         @Autowired
         private DatabaseMessageSource messageSource;
 
-        @Before
-        public void initDefaultLocale() {
+        @BeforeEach
+        void initDefaultLocale() {
             messageSource.setDefaultLocale(ITALIAN);
         }
 
         @Test
-        public void test_LocaleLanguage() {
+        void test_LocaleLanguage() {
             // Database: LocaleLanguage
             // Get from: LocaleLanguage
             // Result: LocaleLanguage
@@ -47,7 +49,7 @@ public class DatabaseMessageSourceTest {
         }
 
         @Test
-        public void test_Locale() {
+        void test_Locale() {
             // Database: LocaleLanguage
             // Get from: Locale
             // Result: default
@@ -55,7 +57,7 @@ public class DatabaseMessageSourceTest {
         }
 
         @Test
-        public void test_default() {
+        void test_default() {
             // Database: LocaleLanguage
             // Get from: ?
             // Result: default
@@ -63,22 +65,22 @@ public class DatabaseMessageSourceTest {
         }
     }
 
-    @RunWith(SpringRunner.class)
-    @ContextConfiguration(classes = DatabaseMessageSourceConfig.class)
-    @Sql("/test-data.sql")
+    @Nested
+    @SpringBootTest(classes = DatabaseMessageSourceConfig.class)
+    @Sql(value = "/test-data.sql", config = @SqlConfig(encoding = "UTF-8"))
     @Sql(statements = "delete from MESSAGE;", executionPhase = AFTER_TEST_METHOD)
-    public static class DatabaseWithLocale {
+    class DatabaseWithLocale {
 
         @Autowired
-        private DatabaseMessageSource messageSource;
+        DatabaseMessageSource messageSource;
 
-        @Before
-        public void initDefaultLocale() {
+        @BeforeEach
+        void initDefaultLocale() {
             messageSource.setDefaultLocale(ITALIAN);
         }
 
         @Test
-        public void test_LocaleLanguage() {
+        void test_LocaleLanguage() {
             // Database: Locale
             // Get from: LocaleLanguage
             // Result: Locale
@@ -86,7 +88,7 @@ public class DatabaseMessageSourceTest {
         }
 
         @Test
-        public void test_Locale() {
+        void test_Locale() {
             // Database: Locale
             // Get from: Locale
             // Result: Locale
@@ -94,7 +96,7 @@ public class DatabaseMessageSourceTest {
         }
 
         @Test
-        public void test_default() {
+        void test_default() {
             // Database: Locale
             // Get from: ?
             // Result: default
@@ -102,22 +104,22 @@ public class DatabaseMessageSourceTest {
         }
     }
 
-    @RunWith(SpringRunner.class)
-    @ContextConfiguration(classes = DatabaseMessageSourceConfig.class)
-    @Sql("/test-data.sql")
+    @Nested
+    @SpringBootTest(classes = DatabaseMessageSourceConfig.class)
+    @Sql(value = "/test-data.sql", config = @SqlConfig(encoding = "UTF-8"))
     @Sql(statements = "delete from MESSAGE;", executionPhase = AFTER_TEST_METHOD)
-    public static class DatabaseWithLocaleAndLocaleLanguage {
+    class DatabaseWithLocaleAndLocaleLanguage {
 
         @Autowired
-        private DatabaseMessageSource messageSource;
+        DatabaseMessageSource messageSource;
 
-        @Before
-        public void initDefaultLocale() {
+        @BeforeEach
+        void initDefaultLocale() {
             messageSource.setDefaultLocale(ITALIAN);
         }
 
         @Test
-        public void test_LocaleLanguage() {
+        void test_LocaleLanguage() {
             // Database: Locale + LocaleLanguage
             // Get from: LocaleLanguage
             // Result: LocaleLanguage
@@ -125,7 +127,7 @@ public class DatabaseMessageSourceTest {
         }
 
         @Test
-        public void test_Locale() {
+        void test_Locale() {
             // Database: Locale + LocaleLanguage
             // Get from: Locale
             // Result: Locale
@@ -133,12 +135,11 @@ public class DatabaseMessageSourceTest {
         }
 
         @Test
-        public void test_default() {
+        void test_default() {
             // Database: Locale + LocaleLanguage
             // Get from: ?
             // Result: default
             assertEquals("Italiano", messageSource.getMessage("key", args, CHINESE));
         }
     }
-
 }

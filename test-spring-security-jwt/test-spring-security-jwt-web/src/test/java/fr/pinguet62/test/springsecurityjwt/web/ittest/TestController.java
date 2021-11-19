@@ -29,5 +29,4 @@ public class TestController {
                 .map(it -> it.stream().map(GrantedAuthority::getAuthority).collect(toList()))
                 .get();
     }
-
 }

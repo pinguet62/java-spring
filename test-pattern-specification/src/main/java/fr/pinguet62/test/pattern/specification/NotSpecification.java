@@ -10,5 +10,4 @@ public class NotSpecification<T> extends AbstractCompositeSpecification<T> {
     public boolean isSatisfiedBy(T candidate) {
         return !specifications[0].isSatisfiedBy(candidate);
     }
-
 }

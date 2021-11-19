@@ -1,15 +1,17 @@
 package fr.pinguet62.test.utils.sax;
 
+import lombok.Getter;
+import org.xml.sax.SAXException;
+
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.xml.sax.SAXException;
 
 public class CompositeSAXException extends SAXException {
 
     private static final long serialVersionUID = 1;
 
+    @Getter
     private List<SAXException> exceptions = new ArrayList<>();
 
     /**
@@ -25,9 +27,4 @@ public class CompositeSAXException extends SAXException {
             message.add(exception.getMessage());
         return message.toString();
     }
-
-    public List<SAXException> getExceptions() {
-        return exceptions;
-    }
-
 }

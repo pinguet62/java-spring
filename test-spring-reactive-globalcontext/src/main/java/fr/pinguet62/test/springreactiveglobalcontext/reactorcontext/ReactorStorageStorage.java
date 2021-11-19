@@ -21,5 +21,4 @@ public class ReactorStorageStorage {
         return Mono.subscriberContext()
                 .doOnNext(it -> it.put(KEY, value));
     }
-
 }

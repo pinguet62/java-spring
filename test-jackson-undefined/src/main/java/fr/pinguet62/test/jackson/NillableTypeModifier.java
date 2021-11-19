@@ -26,5 +26,4 @@ public class NillableTypeModifier extends TypeModifier {
         }
         return ReferenceType.upgradeFrom(type, refType);
     }
-
 }

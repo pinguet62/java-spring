@@ -5,14 +5,11 @@
 
     <parent>
         <groupId>fr.pinguet62.test</groupId>
-        <artifactId>test-parent</artifactId>
+        <artifactId>test</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>test-spring-reactive-globalcontext</artifactId>
-    <packaging>jar</packaging>
-
-    <description>Use global context in Reactor project</description>
 
     <dependencies>
         <dependency>
@@ -25,8 +22,14 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

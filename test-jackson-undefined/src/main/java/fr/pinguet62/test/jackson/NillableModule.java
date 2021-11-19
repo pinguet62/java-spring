@@ -22,5 +22,4 @@ public class NillableModule extends Module {
         context.addDeserializers(new NillableDeserializers());
         context.addTypeModifier(new NillableTypeModifier());
     }
-
 }

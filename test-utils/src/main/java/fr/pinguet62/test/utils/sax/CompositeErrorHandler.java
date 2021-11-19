@@ -27,10 +27,11 @@ public class CompositeErrorHandler implements ErrorHandler {
         errors.getExceptions().add(exception);
     }
 
-    /** @throws SAXException If any error occurred during process. */
+    /**
+     * @throws SAXException If any error occurred during process.
+     */
     public void throwIfErrors() throws SAXException {
         if (!errors.getExceptions().isEmpty())
             throw errors;
     }
-
 }

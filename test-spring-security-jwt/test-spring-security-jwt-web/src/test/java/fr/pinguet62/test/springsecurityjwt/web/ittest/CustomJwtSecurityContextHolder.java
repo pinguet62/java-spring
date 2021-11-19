@@ -26,5 +26,4 @@ public class CustomJwtSecurityContextHolder {
     public static Optional<String> getJwtToken() {
         return getAuthentication().map(JwtAuthenticationToken::getJwtToken);
     }
-
 }

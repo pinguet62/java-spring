@@ -20,5 +20,4 @@ public class ThrowIfNotFoundRepositoryProxyPostProcessor implements RepositoryPr
         ReflectionUtils.doWithMethods(repositoryInformation.getRepositoryInterface(), methodCallback);
         return methodCallback.hasFoundAnnotation();
     }
-
 }

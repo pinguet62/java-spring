@@ -8,5 +8,4 @@ public abstract class JwtAuthenticationProvider implements AuthenticationProvide
     public boolean supports(Class<?> authentication) {
         return JwtAuthenticationToken.class.isAssignableFrom(authentication);
     }
-
 }

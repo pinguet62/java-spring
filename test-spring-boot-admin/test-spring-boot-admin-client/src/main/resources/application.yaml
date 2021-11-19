@@ -1,11 +1,11 @@
 server:
-    port: 8082
+  port: 8082
 # Spring Boot admin: target
 spring:
-    boot:
-        admin:
-            url: http://localhost:8081
+  boot:
+    admin:
+      url: http://localhost:8081
 # Spring Actuator: disable security endpoints
 management:
-    security:
-        enabled: false
+  security:
+    enabled: false

@@ -30,5 +30,4 @@ public class TestSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(new CustomJwtAuthenticationProvider());
     }
-
 }

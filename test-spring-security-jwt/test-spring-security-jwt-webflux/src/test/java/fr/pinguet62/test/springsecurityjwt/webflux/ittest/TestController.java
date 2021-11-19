@@ -30,5 +30,4 @@ public class TestController {
                 .map(GrantedAuthority::getAuthority)
                 .collectList();
     }
-
 }

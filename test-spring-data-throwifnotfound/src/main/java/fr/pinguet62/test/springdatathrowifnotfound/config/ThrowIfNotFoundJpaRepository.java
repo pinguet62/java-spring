@@ -7,5 +7,4 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface ThrowIfNotFoundJpaRepository<T, ID> extends JpaRepository<T, ID> {
 
     T findByIdOrThrow(ID id);
-
 }

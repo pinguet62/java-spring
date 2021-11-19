@@ -6,5 +6,4 @@ public class ExternalModel {
 
     public void requireNotNull(@NotNull String arg) {
     }
-
 }

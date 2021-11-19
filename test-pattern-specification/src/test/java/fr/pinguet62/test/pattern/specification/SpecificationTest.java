@@ -1,30 +1,28 @@
 package fr.pinguet62.test.pattern.specification;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import fr.pinguet62.test.pattern.specification.api.model.Product;
+import fr.pinguet62.test.pattern.specification.api.rule.HighPrice;
+import fr.pinguet62.test.pattern.specification.api.rule.IsBlack;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import fr.pinguet62.test.pattern.specification.model.Product;
-import fr.pinguet62.test.pattern.specification.rule.HighPrice;
-import fr.pinguet62.test.pattern.specification.rule.IsBlack;
+class SpecificationTest {
 
-public class SpecificationTest {
+    final Specification<Product> isBlack = new IsBlack();
 
-    private final Specification<Product> isBlack = new IsBlack();
-
-    private final Specification<Product> more10 = new HighPrice();
+    final Specification<Product> more10 = new HighPrice();
 
     @Test
-    public void test1() {
+    void test1() {
         Product product = new Product("water", 1.23, "white");
         assertFalse(isBlack.and(more10).isSatisfiedBy(product));
     }
 
     @Test
-    public void test2() {
+    void test2() {
         Product product = new Product("car", 12_345, "black");
         assertTrue(isBlack.and(more10).isSatisfiedBy(product));
     }
-
 }

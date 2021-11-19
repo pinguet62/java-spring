@@ -1,5 +1,7 @@
 package fr.pinguet62.test.utils;
 
+import lombok.Getter;
+
 /**
  * Wrapper for Hexavigesimal representation and conversions. <br />
  * 0 <-> "A"<br/>
@@ -13,11 +15,9 @@ public final class Hexavigesimal {
     /**
      * Parses the {@link String} representation of Hexavigesimal value.
      *
-     * @param representation
-     *            The {@link String} representation.
+     * @param representation The {@link String} representation.
      * @return The long value.
-     * @throws IllegalArgumentException
-     *             Invalid hexavigesimal representation.
+     * @throws IllegalArgumentException Invalid hexavigesimal representation.
      */
     public static long parse(final String representation) {
         if ((representation == null) || !representation.matches("[A-Z]+"))
@@ -34,10 +34,15 @@ public final class Hexavigesimal {
         return decimal;
     }
 
-    /** The long value. */
+    /**
+     * The long value.
+     */
+    @Getter
     private final long value;
 
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     public Hexavigesimal() {
         value = 0;
     }
@@ -45,12 +50,10 @@ public final class Hexavigesimal {
     /**
      * Constructor this initial value.
      *
-     * @param value
-     *            The initial value.
-     * @throws IllegalArgumentException
-     *             Unauthorized negative value.
+     * @param value The initial value.
+     * @throws IllegalArgumentException Unauthorized negative value.
      */
-    public Hexavigesimal(final long value) {
+    public Hexavigesimal(long value) {
         if (value < 0)
             throw new IllegalArgumentException("Unauthorized negative value.");
 
@@ -58,24 +61,10 @@ public final class Hexavigesimal {
     }
 
     /**
-     * Constructor this initial value.
-     *
-     * @param representation
-     *            The initial representation.
-     * @throws IllegalArgumentException
-     *             Invalid hexavigesimal representation.
+     * @param representation The initial representation.
      */
     public Hexavigesimal(final String representation) {
         value = Hexavigesimal.parse(representation);
-    }
-
-    /**
-     * Gets the long value.
-     *
-     * @return The long value.
-     */
-    public long longValue() {
-        return value;
     }
 
     /**
@@ -95,5 +84,4 @@ public final class Hexavigesimal {
         }
         return converted.reverse().toString();
     }
-
 }

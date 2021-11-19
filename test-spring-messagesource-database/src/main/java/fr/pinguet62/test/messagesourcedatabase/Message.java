@@ -1,17 +1,22 @@
 package fr.pinguet62.test.messagesourcedatabase;
 
-import java.io.Serializable;
+import fr.pinguet62.test.messagesourcedatabase.Message.MessageId;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import java.io.Serializable;
 
-import fr.pinguet62.test.messagesourcedatabase.Message.MessageId;
-
+@Getter
+@Setter
 @Entity
 @IdClass(MessageId.class)
 public class Message {
 
+    @Getter
+    @Setter
     public static class MessageId implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -19,23 +24,6 @@ public class Message {
         private String code;
 
         private String locale;
-
-        public String getCode() {
-            return code;
-        }
-
-        public String getLocale() {
-            return locale;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public void setLocale(String locale) {
-            this.locale = locale;
-        }
-
     }
 
     @Id
@@ -45,29 +33,4 @@ public class Message {
     private String locale;
 
     private String value;
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public void setValue(String message) {
-        this.value = message;
-    }
-
 }

@@ -2,7 +2,8 @@
 
 ## JSR-303 (Bean validation)
 
-[AspectJ](http://www.eclipse.org/aspectj) `@Aspect` for constructor + method + returned value **validation** based on [**JSR 303**](https://jcp.org/en/jsr/detail?id=303) annotations.
+[AspectJ](http://www.eclipse.org/aspectj) `@Aspect` for constructor + method + returned value **validation** based on [**JSR
+303**](https://jcp.org/en/jsr/detail?id=303) annotations.
 
 ```java
 @NotNull

@@ -33,5 +33,4 @@ public class TestSecurityConfig {
                 .build();
         // @formatter:on
     }
-
 }

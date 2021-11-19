@@ -1,11 +1,10 @@
 package fr.pinguet62.test.utils;
 
-import static java.nio.file.Files.newInputStream;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.file.Path;
+import fr.pinguet62.test.utils.sax.CompositeErrorHandler;
+import fr.pinguet62.test.utils.sax.LSResourceResolverImpl;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,17 +15,18 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.nio.file.Path;
 
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import fr.pinguet62.test.utils.sax.CompositeErrorHandler;
-import fr.pinguet62.test.utils.sax.LSResourceResolverImpl;
+import static java.nio.file.Files.newInputStream;
 
 public class XmlUtils {
 
-    /** @throws SAXException {@link Validator#validate(Source)} (wrapping {@link IOException}) */
+    /**
+     * @throws SAXException {@link Validator#validate(Source)} (wrapping {@link IOException})
+     */
     public static void validate(Source xml, Path xsdPath) throws SAXException {
         Schema schema = schema(xsdPath);
         Validator validator = schema.newValidator();
@@ -43,7 +43,9 @@ public class XmlUtils {
         errorHandler.throwIfErrors();
     }
 
-    /** Convert {@link Path} to {@link Schema}. */
+    /**
+     * Convert {@link Path} to {@link Schema}.
+     */
     public static Schema schema(Path xsd) {
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -56,7 +58,7 @@ public class XmlUtils {
 
     /**
      * Convert {@link String} to {@link Source}.
-     * 
+     *
      * @see InputSource#InputSource(Reader)
      */
     public static Source source(String xml) {
@@ -70,5 +72,4 @@ public class XmlUtils {
             throw new IllegalArgumentException(e);
         }
     }
-
 }

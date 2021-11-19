@@ -15,5 +15,4 @@ public interface Specification<T> {
     default Specification<T> or(Specification<T> specification) {
         return new OrSpecification<>(this, specification);
     }
-
 }

@@ -31,5 +31,4 @@ public class CustomJwtAuthenticationManager implements ReactiveAuthenticationMan
         CustomJwtAuthenticationToken customAuthentication = new CustomJwtAuthenticationToken(jwtAuthenticationToken.getSubject(), jwtAuthenticationToken.getJwtToken(), jwtAuthenticationToken.getDecodedJWT(), authorities);
         return just(customAuthentication);
     }
-
 }

@@ -16,5 +16,4 @@ public class RoutingDataSourceLookupHolder {
     public static void set(Object value) {
         HOLDER.set(value);
     }
-
 }

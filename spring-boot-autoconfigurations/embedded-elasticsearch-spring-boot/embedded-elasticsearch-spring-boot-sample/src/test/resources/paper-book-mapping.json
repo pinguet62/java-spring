@@ -1,0 +1,15 @@
+{
+  "paper_book": {
+    "properties": {
+      "author": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "keyword"
+      },
+      "description": {
+        "type": "text"
+      }
+    }
+  }
+}

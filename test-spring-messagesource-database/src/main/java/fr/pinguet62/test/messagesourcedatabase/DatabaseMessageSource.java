@@ -1,23 +1,23 @@
 package fr.pinguet62.test.messagesourcedatabase;
 
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.context.support.AbstractMessageSource;
+import org.springframework.stereotype.Component;
+
 import java.text.MessageFormat;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.springframework.context.support.AbstractMessageSource;
-import org.springframework.stereotype.Component;
-
+@RequiredArgsConstructor
 @Component
 public class DatabaseMessageSource extends AbstractMessageSource {
 
     private final MessageRepository repository;
 
+    @Setter
     private Locale defaultLocale;
-
-    public DatabaseMessageSource(MessageRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     protected MessageFormat resolveCode(String code, Locale locale) {
@@ -33,9 +33,4 @@ public class DatabaseMessageSource extends AbstractMessageSource {
             return null;
         return new MessageFormat(message);
     }
-
-    public void setDefaultLocale(Locale defaultLocale) {
-        this.defaultLocale = defaultLocale;
-    }
-
 }
