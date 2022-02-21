@@ -1,6 +1,8 @@
 package fr.pinguet62.test.messagesourcedatabase;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +28,8 @@ interface MessageRepositoryCustom {
 class MessageRepositoryImpl implements MessageRepositoryCustom {
 
     @Autowired // workaround: circular reference
+    @Lazy
+    @Setter
     private MessageRepository messageRepository;
 
     @Override
