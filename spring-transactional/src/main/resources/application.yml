@@ -1,0 +1,10 @@
+spring:
+  mongodb:
+    embedded:
+      version: 4.0.12
+      storage:
+        repl-set-name: rs0
+  kafka:
+    producer:
+      properties:
+        transactional.id: jpt # instead of "spring.kafka.producer.transaction-id-prefix"
