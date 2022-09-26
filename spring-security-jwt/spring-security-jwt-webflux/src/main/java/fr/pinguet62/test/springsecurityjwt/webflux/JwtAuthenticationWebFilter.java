@@ -18,7 +18,7 @@ public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
 
     public JwtAuthenticationWebFilter(ReactiveAuthenticationManager authenticationManager) {
         super(authenticationManager);
-        setAuthenticationConverter(new JwtAuthenticationConverter());
+        setServerAuthenticationConverter(new JwtAuthenticationConverter());
         setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(new JwtAuthenticationEntryPoint()));
     }
 

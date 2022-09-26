@@ -5,6 +5,8 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.matching.UrlPattern;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpMethod;
@@ -29,7 +31,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.trace;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static fr.pinguet62.springboot.wiremock.WireMockCallMock.NULL;
-import static org.springframework.core.annotation.AnnotationUtils.getRepeatableAnnotations;
 
 @Configuration
 public class WireMockTestExecutionListener extends AbstractTestExecutionListener {
@@ -38,32 +39,38 @@ public class WireMockTestExecutionListener extends AbstractTestExecutionListener
 
     @Override
     public void beforeTestClass(TestContext testContext) {
-        for (WireMockApi wireMockApi : getRepeatableAnnotations(testContext.getTestClass(), WireMockApi.class)) {
-            WireMockServer wireMockServer = new WireMockServer(options().dynamicPort());
-            wireMockServer.start();
-            System.setProperty(wireMockApi.propertyKey(), String.valueOf(wireMockServer.port())); // TODO use Spring's context
-            startedApis.put(wireMockApi.api(), wireMockServer);
-        }
+        MergedAnnotations.from(testContext.getTestClass())
+                .stream(WireMockApi.class)
+                .map(MergedAnnotation::synthesize)
+                .forEach(wireMockApi -> {
+                    WireMockServer wireMockServer = new WireMockServer(options().dynamicPort());
+                    wireMockServer.start();
+                    System.setProperty(wireMockApi.propertyKey(), String.valueOf(wireMockServer.port())); // TODO use Spring's context
+                    startedApis.put(wireMockApi.api(), wireMockServer);
+                });
     }
 
     @Override
     public void beforeTestExecution(TestContext testContext) {
         ResourceLoader resourceLoader = testContext.getApplicationContext();
 
-        for (WireMockCallMock wireMockCallMock : getRepeatableAnnotations(testContext.getTestMethod(), WireMockCallMock.class)) {
-            String api = wireMockCallMock.api();
-            WireMockServer wireMockServer = startedApis.get(api);
-            if (wireMockServer == null)
-                throw new RuntimeException("Not declarated API: " + api + ". Use @" + WireMockApi.class.getSimpleName() + "(api = \"" + api + "\")");
+        MergedAnnotations.from(testContext.getTestMethod())
+                .stream(WireMockCallMock.class)
+                .map(MergedAnnotation::synthesize)
+                .forEach(wireMockCallMock -> {
+                    String api = wireMockCallMock.api();
+                    WireMockServer wireMockServer = startedApis.get(api);
+                    if (wireMockServer == null)
+                        throw new RuntimeException("Not declared API: " + api + ". Use @" + WireMockApi.class.getSimpleName() + "(api = \"" + api + "\")");
 
-            UrlPattern urlPattern = urlMatching(wireMockCallMock.urlMatching());
-            MappingBuilder mappingBuilder = getMappingBuilder(urlPattern, wireMockCallMock.method());
-            ResponseDefinitionBuilder responseDefBuilder = aResponse()
-                    .withStatus(wireMockCallMock.status())
-                    .withBody(getBody(wireMockCallMock, resourceLoader));
-            mappingBuilder.willReturn(responseDefBuilder);
-            wireMockServer.stubFor(mappingBuilder);
-        }
+                    UrlPattern urlPattern = urlMatching(wireMockCallMock.urlMatching());
+                    MappingBuilder mappingBuilder = getMappingBuilder(urlPattern, wireMockCallMock.method());
+                    ResponseDefinitionBuilder responseDefBuilder = aResponse()
+                            .withStatus(wireMockCallMock.status())
+                            .withBody(getBody(wireMockCallMock, resourceLoader));
+                    mappingBuilder.willReturn(responseDefBuilder);
+                    wireMockServer.stubFor(mappingBuilder);
+                });
     }
 
     @Override
@@ -86,7 +93,7 @@ public class WireMockTestExecutionListener extends AbstractTestExecutionListener
                 return patch(urlPattern);
             case DELETE:
                 return delete(urlPattern);
-//                case OPTIONS: return options(urlPattern);
+            //                case OPTIONS: return options(urlPattern);
             case TRACE:
                 return trace(urlPattern);
             default:

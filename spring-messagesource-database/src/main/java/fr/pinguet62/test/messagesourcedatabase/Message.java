@@ -32,5 +32,5 @@ public class Message {
     @Id
     private String locale;
 
-    private String value;
+    private String translation;
 }

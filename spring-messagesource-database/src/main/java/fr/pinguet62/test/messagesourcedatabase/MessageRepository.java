@@ -19,7 +19,7 @@ interface MessageRepositoryCustom {
 
     /**
      * @param locale Ordered {@link Locale}.
-     * @return The {@link Message#getValue()}<br>
+     * @return The {@link Message#getTranslation()}<br>
      * {@code null} if not found.
      */
     String findValueByCodeAndLocaleOrDefault(String code, Set<String> locales);
@@ -37,7 +37,7 @@ class MessageRepositoryImpl implements MessageRepositoryCustom {
         for (String loc : locales) {
             Message message = messageRepository.findValueByCodeAndLocale(code, loc);
             if (message != null)
-                return message.getValue();
+                return message.getTranslation();
         }
         return null;
     }

@@ -5,22 +5,21 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.function.Function;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static reactor.core.publisher.Mono.empty;
 import static reactor.core.publisher.Mono.just;
 
-public class JwtAuthenticationConverter implements Function<ServerWebExchange, Mono<Authentication>> {
+public class JwtAuthenticationConverter implements ServerAuthenticationConverter {
 
     public static final String TOKEN_PREFIX = "bearer ";
     public static final String HEADER_KEY = AUTHORIZATION;
 
     @Override
-    public Mono<Authentication> apply(ServerWebExchange exchange) {
+    public Mono<Authentication> convert(ServerWebExchange exchange) {
         ServerHttpRequest request = exchange.getRequest();
 
         String header = request.getHeaders().getFirst(HEADER_KEY);
