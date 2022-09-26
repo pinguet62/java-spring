@@ -31,6 +31,7 @@
         <module>spring-data-throwifnotfound</module>
         <module>spring-datasource-routing-autoconfiguration</module>
         <module>spring-messagesource-database</module>
+        <module>spring-mongo-embedded-args</module>
         <module>spring-security-jwt</module>
         <module>spring-statemachine-sample</module>
         <module>spring-transactional</module>
