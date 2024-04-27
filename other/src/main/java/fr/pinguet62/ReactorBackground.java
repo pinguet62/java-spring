@@ -7,6 +7,7 @@ import reactor.core.publisher.MonoSink;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
+// TODO doit être une lambda en paramètre, pour controler le cancel au niveau parent
 public class ReactorBackground {
 
     public static <T> Function<Mono<T>, Mono<Mono<T>>> preSubscribe() {
@@ -16,8 +17,14 @@ public class ReactorBackground {
             Mono<T> wrapped = Mono.create(monoSink -> {
                 System.out.println("Mono.create(MonoSink -> ...)");
                 backgroundMonoSinkRef.set(monoSink);
+                monoSink.onRequest(r -> {
+                    System.out.println("MonoSink.onRequest(" + r + ")");
+                });
                 monoSink.onCancel(() -> {
                     System.out.println("MonoSink.onCancel()");
+                });
+                monoSink.onDispose(() -> {
+                    System.out.println("MonoSink.onDispose()");
                 });
             });
             return Mono.just(wrapped)
@@ -38,14 +45,20 @@ public class ReactorBackground {
                     .doOnCancel(() -> {
                         System.out.println("wrapper > .doOnCancel()");
                         disposableRef.get().dispose();
+                    })
+                    .doOnSuccess(it -> {
+                        System.out.println("wrapper > .doOnSuccess()");
+                    })
+                    .doOnTerminate(() -> {
+                        System.out.println("wrapper > .doOnTerminate()");
+//                        disposableRef.get().dispose();
+                    })
+                    .doFinally(f -> {
+                        System.out.println("wrapper > .doFinally(" + f + ")");
+                    })
+                    .doAfterTerminate(() -> {
+                        System.out.println("wrapper > .doAfterTerminate()");
                     });
         };
-    }
-
-    /**
-     * The {@code Mono<T>} must be consumed tardily to avoid blocking process.
-     */
-    public static <T, O> Mono<O> withBackground(Mono<T> task, Function<Mono<T>, Mono<O>> mapper) {
-        return Mono.empty();
     }
 }

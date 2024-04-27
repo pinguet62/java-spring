@@ -12,8 +12,6 @@ import java.util.List;
 
 import static fr.pinguet62.ReactorBackground.preSubscribe;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class ReactorBackgroundTest {
 
@@ -24,29 +22,20 @@ class ReactorBackgroundTest {
             TestPublisher<String> processPrefetchInBackground = TestPublisher.create();
 
             TestPublisher<String> mainProcess = TestPublisher.create();
-            Runnable intermediateProcess = mock(Runnable.class);
 
-            StepVerifier.create(Mono.zip(
-                                    processPrefetchInBackground.mono()
-                                            .transform(preSubscribe()),
-                                    mainProcess.mono())
-                            .flatMap(tuple -> {
-                                intermediateProcess.run();
-                                String first = tuple.getT2();
-                                Mono<String> back = tuple.getT1();
-                                return back.map(second -> first + second);
-                            }))
+            StepVerifier.create(
+                            processPrefetchInBackground.mono()
+                                    .transform(preSubscribe())
+                                    .flatMap(background ->
+                                            mainProcess.mono().flatMap(first ->
+                                                    background.map(second -> first + second))))
                     .then(() -> {
                         mainProcess.assertWasSubscribed();
                         processPrefetchInBackground.assertWasSubscribed(); // launched in background
 
                         mainProcess.emit("Hello");
                     })
-                    .then(() -> {
-                        verify(intermediateProcess).run(); // not blocking
-
-                        processPrefetchInBackground.emit(" world!");
-                    })
+                    .then(() -> processPrefetchInBackground.emit(" world!"))
                     .expectNext("Hello world!")
                     .verifyComplete();
         }
@@ -57,7 +46,7 @@ class ReactorBackgroundTest {
 
             Disposable disposable = background.mono()
                     .transform(preSubscribe())
-                    .flatMap(x -> TestPublisher.create().mono() /*force wait*/)
+                    .flatMap(asynctask -> TestPublisher.create().mono() /*force wait*/)
                     .subscribe();
             disposable.dispose(); // cancel
 
@@ -66,23 +55,18 @@ class ReactorBackgroundTest {
         }
 
         @Test
-        void shouldCancelSubscriptionWhenNotUsedInSubprocess() {
-            TestPublisher<String> background = TestPublisher.create();
+        void shouldCancelSubscription_whenMainProcessTerminatedWithoutConsumingBackgroundTask() {
+            TestPublisher<String> backgroundProcess = TestPublisher.create();
 
-            StepVerifier.create(Mono.zip(
-                                    background.mono()
-                                            .transform(preSubscribe()),
-                                    Mono.just("Hello"))
-                            .map(tuple -> {
-                                String first = tuple.getT2();
-                                // no usage: tuple.getT1();
-                                return first;
-                            }))
+            StepVerifier.create(
+                            backgroundProcess.mono()
+                                    .transform(preSubscribe())
+                                    .flatMap(background -> Mono.just("Hello")))
                     .expectNext("Hello")
                     .verifyComplete();
 
-            background.assertWasSubscribed();
-            background.assertWasCancelled();
+            backgroundProcess.assertWasSubscribed();
+            backgroundProcess.assertWasCancelled();
         }
 
         @Disabled
@@ -91,6 +75,7 @@ class ReactorBackgroundTest {
             fail();
         }
 
+        @Disabled
         @Test
         void test() {
             for (Mono<String> mono : List.of(
@@ -114,6 +99,24 @@ class ReactorBackgroundTest {
                         .expectNextMatches(x -> true)
                         .verifyComplete();
             }
+        }
+
+        @Test
+        void test2() {
+            Mono.just("A")
+                    .doOnSubscribe(x -> System.out.println("A doOnSubscribe()"))
+                    .doOnCancel(() -> System.out.println("A doOnCancel()"))
+                    .doOnSuccess(x -> System.out.println("A doOnSuccess()"))
+                    .doOnTerminate(() -> System.out.println("A doOnTerminate()"))
+
+                    .map(it -> it)
+                    .doOnNext(x -> System.out.println("doOnNext()"))
+                    .doOnSubscribe(x -> System.out.println("B doOnSubscribe()"))
+                    .doOnCancel(() -> System.out.println("B doOnCancel()"))
+                    .doOnSuccess(x -> System.out.println("B doOnSuccess()"))
+                    .doOnTerminate(() -> System.out.println("B doOnTerminate()"))
+
+                    .block();
         }
     }
 }
