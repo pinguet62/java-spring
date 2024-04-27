@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import javax.servlet.FilterChain;
+import jakarta.servlet.FilterChain;
 
 import static fr.pinguet62.test.springsecurityjwt.web.JwtAuthenticationFilter.HEADER_KEY;
 import static fr.pinguet62.test.springsecurityjwt.web.JwtAuthenticationFilter.TOKEN_PREFIX;

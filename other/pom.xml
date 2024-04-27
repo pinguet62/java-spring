@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>test-utils</artifactId>
+    <artifactId>other</artifactId>
 
     <dependencies>
         <dependency>

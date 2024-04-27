@@ -13,7 +13,7 @@ public class ReactiveKafkaAutoConfiguration {
 
     @Bean
     ReactiveKafkaProducerTemplate<?, ?> reactiveKafkaProducerTemplate(KafkaProperties properties) {
-        Map<String, Object> props = properties.buildProducerProperties();
+        Map<String, Object> props = properties.buildProducerProperties(null);
         return new ReactiveKafkaProducerTemplate<>(SenderOptions.create(props));
     }
 }

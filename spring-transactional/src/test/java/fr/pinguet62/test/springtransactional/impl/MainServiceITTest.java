@@ -1,8 +1,9 @@
 package fr.pinguet62.test.springtransactional.impl;
 
+import de.flapdoodle.embed.mongo.commands.MongodArguments;
+import de.flapdoodle.embed.mongo.config.Storage;
 import fr.pinguet62.test.springtransactional.OtherService.OtherException;
 import fr.pinguet62.test.springtransactional.TransactionalApplication;
-import fr.pinguet62.test.springtransactional.config.MongoReplicaConfig;
 import fr.pinguet62.test.springtransactional.impl.mongo.SampleDocument;
 import fr.pinguet62.test.springtransactional.impl.mongo.SampleRepository;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -22,10 +24,13 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static de.flapdoodle.embed.mongo.distribution.Version.Main.PRODUCTION;
+import static fr.pinguet62.test.springtransactional.impl.MainServiceITTest.MongoTransactionalConfiguration;
 import static fr.pinguet62.test.springtransactional.impl.kafka.KafkaService.TOPIC;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -39,8 +44,21 @@ import static org.springframework.kafka.test.EmbeddedKafkaBroker.SPRING_EMBEDDED
         "transaction.state.log.replication.factor=1",
         "transaction.state.log.min.isr=1",
 })
-@Import(MongoReplicaConfig.class)
+@Import(MongoTransactionalConfiguration.class)
 public class MainServiceITTest {
+
+    static {
+        System.setProperty("de.flapdoodle.mongodb.embedded.version", PRODUCTION.asInDownloadPath());
+    }
+
+    static class MongoTransactionalConfiguration {
+        @Bean
+        MongodArguments mongodArguments() {
+            return MongodArguments.builder()
+                    .replication(Storage.of("test", 10))
+                    .build();
+        }
+    }
 
     @Autowired
     ReactiveMongoTemplate mongoTemplate;
@@ -101,6 +119,6 @@ public class MainServiceITTest {
         Consumer<Integer, String> consumer = new DefaultKafkaConsumerFactory<Integer, String>(props)
                 .createConsumer();
         consumer.subscribe(List.of(TOPIC));
-        assertThat(KafkaTestUtils.getRecords(consumer, 1000).count(), matcher);
+        assertThat(KafkaTestUtils.getRecords(consumer, Duration.ofSeconds(1)).count(), matcher);
     }
 }

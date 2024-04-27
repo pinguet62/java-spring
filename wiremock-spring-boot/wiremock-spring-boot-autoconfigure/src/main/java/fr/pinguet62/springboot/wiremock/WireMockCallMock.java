@@ -1,7 +1,5 @@
 package fr.pinguet62.springboot.wiremock;
 
-import org.springframework.http.HttpMethod;
-
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -21,7 +19,7 @@ public @interface WireMockCallMock {
      */
     String api();
 
-    HttpMethod method();
+    String method();
 
     /**
      * @see com.github.tomakehurst.wiremock.client.WireMock#urlMatching(String)

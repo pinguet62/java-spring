@@ -3,6 +3,7 @@ package fr.pinguet62.springboot.wiremock;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.matching.UrlPattern;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.MergedAnnotation;
@@ -24,12 +25,12 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.delete;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.head;
+import static com.github.tomakehurst.wiremock.client.WireMock.options;
 import static com.github.tomakehurst.wiremock.client.WireMock.patch;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.trace;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static fr.pinguet62.springboot.wiremock.WireMockCallMock.NULL;
 
 @Configuration
@@ -43,7 +44,7 @@ public class WireMockTestExecutionListener extends AbstractTestExecutionListener
                 .stream(WireMockApi.class)
                 .map(MergedAnnotation::synthesize)
                 .forEach(wireMockApi -> {
-                    WireMockServer wireMockServer = new WireMockServer(options().dynamicPort());
+                    WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.options().dynamicPort());
                     wireMockServer.start();
                     System.setProperty(wireMockApi.propertyKey(), String.valueOf(wireMockServer.port())); // TODO use Spring's context
                     startedApis.put(wireMockApi.api(), wireMockServer);
@@ -64,7 +65,7 @@ public class WireMockTestExecutionListener extends AbstractTestExecutionListener
                         throw new RuntimeException("Not declared API: " + api + ". Use @" + WireMockApi.class.getSimpleName() + "(api = \"" + api + "\")");
 
                     UrlPattern urlPattern = urlMatching(wireMockCallMock.urlMatching());
-                    MappingBuilder mappingBuilder = getMappingBuilder(urlPattern, wireMockCallMock.method());
+                    MappingBuilder mappingBuilder = getMappingBuilder(urlPattern, HttpMethod.valueOf(wireMockCallMock.method()));
                     ResponseDefinitionBuilder responseDefBuilder = aResponse()
                             .withStatus(wireMockCallMock.status())
                             .withBody(getBody(wireMockCallMock, resourceLoader));
@@ -80,25 +81,17 @@ public class WireMockTestExecutionListener extends AbstractTestExecutionListener
     }
 
     private static MappingBuilder getMappingBuilder(UrlPattern urlPattern, HttpMethod method) {
-        switch (method) {
-            case GET:
-                return get(urlPattern);
-            case HEAD:
-                return head(urlPattern);
-            case POST:
-                return post(urlPattern);
-            case PUT:
-                return put(urlPattern);
-            case PATCH:
-                return patch(urlPattern);
-            case DELETE:
-                return delete(urlPattern);
-            //                case OPTIONS: return options(urlPattern);
-            case TRACE:
-                return trace(urlPattern);
-            default:
-                throw new UnsupportedOperationException("Unsupported method: " + method);
-        }
+        return switch (method.name()) {
+            case "GET" -> get(urlPattern);
+            case "HEAD" -> head(urlPattern);
+            case "POST" -> post(urlPattern);
+            case "PUT" -> put(urlPattern);
+            case "PATCH" -> patch(urlPattern);
+            case "DELETE" -> delete(urlPattern);
+            case "OPTIONS" -> options(urlPattern);
+            case "TRACE" -> trace(urlPattern);
+            default -> throw new UnsupportedOperationException("Unsupported method: " + method);
+        };
     }
 
     private static String getBody(WireMockCallMock wireMockCallMock, ResourceLoader resourceLoader) {

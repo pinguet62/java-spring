@@ -1,6 +1,6 @@
 package fr.pinguet62.mongo.embedded;
 
-import de.flapdoodle.embed.mongo.config.MongodConfig;
+import de.flapdoodle.embed.mongo.commands.ImmutableMongodArguments;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Repeatable;
@@ -11,7 +11,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * @see MongodConfig#args()
+ * @see ImmutableMongodArguments#args()
  */
 @Target(TYPE)
 @Retention(RUNTIME)

@@ -1,6 +1,6 @@
 package fr.pinguet62.test.springdataencrypt;
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 public class CryptoConverter implements AttributeConverter<String, String> {
 

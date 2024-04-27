@@ -1,6 +1,6 @@
 package fr.pinguet62.mongo.embedded;
 
-import de.flapdoodle.embed.mongo.config.MongodConfig;
+import de.flapdoodle.embed.mongo.commands.MongodArguments;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class AppendArgsToMongodConfigBeanPostProcessor implements BeanPostProces
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
-        if (bean instanceof MongodConfig mongodConfig) {
-            return MongodConfig.builder()
+        if (bean instanceof MongodArguments mongodConfig) {
+            return MongodArguments.builder()
                     .from(mongodConfig)
                     .putAllArgs(args)
                     .build();

@@ -8,15 +8,15 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.ConstructorSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validation;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Set;
 
 /**
- * {@link Aspect} to validate all {@code javax.validation.*} (and custom extensions) annotations.
+ * {@link Aspect} to validate all {@code jakarta.validation.*} (and custom extensions) annotations.
  * <p>
  * Throw an {@link ConstraintViolationException} containing all {@link ConstraintViolation}.
  *
@@ -72,24 +72,24 @@ public class Jsr303ValidationAspect {
     /**
      * Support only:
      * <ul>
-     * <li>Java EE API, from {@code javax.validation.constraints} package</li>
+     * <li>Java EE API, from {@code jakarta.validation.constraints} package</li>
      * <li>Hibernate implementation, from {@code org.hibernate.validator} package</li>
      * </ul>
      */
-    @Pointcut(/* constructor */ "execution(*.new(.., @(javax.validation.constraints..*) (*), ..)) || execution(*.new(.., @(org.hibernate.validator..*) (*), ..))"
+    @Pointcut(/* constructor */ "execution(*.new(.., @(jakarta.validation.constraints..*) (*), ..)) || execution(*.new(.., @(org.hibernate.validator..*) (*), ..))"
             + " || "
-            + /* method */ "execution(* *(.., @(javax.validation.constraints..*) (*), ..)) || execution(* *(.., @(org.hibernate.validator..*) (*), ..))")
+            + /* method */ "execution(* *(.., @(jakarta.validation.constraints..*) (*), ..)) || execution(* *(.., @(org.hibernate.validator..*) (*), ..))")
     public void hasAnnotatedArgument() {
     }
 
     /**
      * Support only:
      * <ul>
-     * <li>Java EE API, from {@code javax.validation.constraints} package</li>
+     * <li>Java EE API, from {@code jakarta.validation.constraints} package</li>
      * <li>Hibernate implementation, from {@code org.hibernate.validator} package</li>
      * </ul>
      */
-    @Pointcut("execution(@(javax.validation.constraints..*) * *.*(..)) || execution(@(org.hibernate.validator..*) * *.*(..))")
+    @Pointcut("execution(@(jakarta.validation.constraints..*) * *.*(..)) || execution(@(org.hibernate.validator..*) * *.*(..))")
     public void isMethodAnnotated() {
     }
 

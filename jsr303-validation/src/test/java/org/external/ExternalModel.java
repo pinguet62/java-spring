@@ -1,6 +1,6 @@
 package org.external;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class ExternalModel {
 
