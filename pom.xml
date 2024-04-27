@@ -31,6 +31,7 @@
         <module>spring-boot-admin-sample</module>
         <module>spring-data-throwifnotfound</module>
         <module>spring-jdbc-datasource-routing-autoconfiguration</module>
+        <module>spring-kafka-listener-customizer</module>
         <module>spring-messagesource-database</module>
         <module>spring-transactional</module>
         <module>wiremock-spring-boot</module>

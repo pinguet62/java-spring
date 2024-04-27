@@ -1,0 +1,2 @@
+fr.pinguet62.springkafkalistener.customizer.KafkaListenerEndpointCustomizerAutoConfiguration
+fr.pinguet62.springkafkalistener.override.OverrideKafkaListenerAutoConfiguration
