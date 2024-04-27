@@ -19,20 +19,18 @@
     </properties>
 
     <modules>
-        <module>asciidoc-site</module>
+        <module>asciidoc-maven-site</module>
         <!--<module>embedded-elasticsearch-spring-boot</module>-->
+        <module>flapdoodle-mongo-args</module>
         <module>jackson-undefined</module>
         <module>jsr303-validation</module>
         <module>junit5-composition</module>
         <module>other</module>
         <module>specification-pattern</module>
         <module>spring-boot-admin-sample</module>
-        <module>spring-data-encrypt</module>
         <module>spring-data-throwifnotfound</module>
-        <module>spring-datasource-routing-autoconfiguration</module>
+        <module>spring-jdbc-datasource-routing-autoconfiguration</module>
         <module>spring-messagesource-database</module>
-        <module>spring-mongo-embedded-args</module>
-        <module>spring-security-jwt</module>
         <module>spring-transactional</module>
         <module>wiremock-spring-boot</module>
     </modules>

@@ -1,6 +1,4 @@
-# Test
-
-## Specification pattern
+# Specification pattern
 
 ```java
 Specification isBlack;

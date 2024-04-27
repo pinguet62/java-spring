@@ -1,10 +1,8 @@
-# Test
-
-## Jackson "undefined"
+# Jackson "undefined"
 
 Problem: `undefined` and `null` are handled as `null` by Java.
 
-### Solution 1: intercept *setter* and store "not undefined" state in *specific flag*
+## Solution 1: intercept *setter* and store "not undefined" state in *specific flag*
 
 Example:
 
@@ -33,7 +31,7 @@ public class MyDto {
 
 Problem: **verbose** because each setter must be wrapped.
 
-### Solution 2: use nullable `Optional`
+## Solution 2: use nullable `Optional`
 
 Example:
 
@@ -56,7 +54,7 @@ public class MyDto {
 
 Problem: **bad practice** because `Optional` should never be `null`.
 
-### Solution 3: wrap type around "nillable" (like `Optional`)
+## Solution 3: wrap type around "nillable" (like `Optional`)
 
 Example:
 

@@ -1,4 +1,4 @@
-# Spring Data: *throw if not found*
+# Spring Data & `find()`: *throw if not found*
 
 https://stackoverflow.com/questions/26258158/how-to-instrument-advice-a-spring-data-jpa-repository
 
