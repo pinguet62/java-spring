@@ -24,6 +24,7 @@
         <!--<module>embedded-elasticsearch-spring-boot</module>-->
         <module>jackson-undefined</module>
         <module>jsr303-validation</module>
+        <module>junit5-composition</module>
         <module>other</module>
         <module>specification-pattern</module>
         <module>spring-boot-admin-sample</module>
