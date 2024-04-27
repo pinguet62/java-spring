@@ -4,8 +4,14 @@ server:
 spring:
   boot:
     admin:
-      url: http://localhost:8081
-# Spring Actuator: disable security endpoints
+      client:
+        url: http://localhost:8081
+# Spring Actuator: expose all
 management:
-  security:
-    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
