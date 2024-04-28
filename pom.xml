@@ -20,7 +20,6 @@
 
     <modules>
         <module>asciidoc-maven-site</module>
-        <!--<module>embedded-elasticsearch-spring-boot</module>-->
         <module>flapdoodle-mongo-args</module>
         <module>jackson-undefined</module>
         <module>jsr303-validation</module>
